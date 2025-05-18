@@ -1,0 +1,162 @@
+bin.2
+
+organism: Genus species strain
+contigs: 298
+bases: 2909140
+CDS: 2705
+gene: 2737
+rRNA: 1
+tRNA: 30
+tmRNA: 1
+
+bin.5
+
+organism: Genus species strain
+contigs: 200
+bases: 1760616
+CDS: 1719
+gene: 1751
+rRNA: 1
+tRNA: 30
+tmRNA: 1organism: Genus species strain
+contigs: 200
+bases: 1760616
+CDS: 1719
+gene: 1751
+rRNA: 1
+tRNA: 30
+tmRNA: 1
+
+bin.9
+
+organism: Genus species strain
+contigs: 331
+bases: 2299704
+CDS: 2145
+gene: 2180
+rRNA: 1
+tRNA: 33
+tmRNA: 1
+
+bin.10
+
+organism: Genus species strain
+contigs: 325
+bases: 1708283
+CDS: 2073
+gene: 2109
+tRNA: 36
+
+bin.11
+
+organism: Genus species strain
+contigs: 271
+bases: 3688617
+CDS: 2893
+gene: 2947
+rRNA: 1
+tRNA: 52
+tmRNA: 1
+
+bin.12
+
+organism: Genus species strain
+contigs: 422
+bases: 2403615
+CDS: 2382
+gene: 2413
+rRNA: 1
+tRNA: 29
+tmRNA: 1
+
+bin.13
+
+organism: Genus species strain
+contigs: 573
+bases: 2541386
+CDS: 2426
+gene: 2447
+tRNA: 20
+tmRNA: 1
+
+bin.20
+
+organism: Genus species strain
+contigs: 116
+bases: 2648678
+CDS: 2561
+gene: 2608
+tRNA: 46
+tmRNA: 1
+
+bin.22
+
+organism: Genus species strain
+contigs: 303
+bases: 2309288
+CDS: 2267
+gene: 2307
+rRNA: 1
+tRNA: 38
+tmRNA: 1
+
+bin.31
+
+organism: Genus species strain
+contigs: 209
+bases: 2878036
+CDS: 2660
+CRISPR: 1
+gene: 2694
+rRNA: 1
+tRNA: 33
+
+bin.36
+
+organism: Genus species strain
+contigs: 55
+bases: 2542024
+CDS: 2466
+gene: 2509
+rRNA: 3
+tRNA: 39
+tmRNA: 1organism: Genus species strain
+contigs: 55
+bases: 2542024
+CDS: 2466
+gene: 2509
+rRNA: 3
+tRNA: 39
+tmRNA: 1
+
+bin.49
+
+organism: Genus species strain
+contigs: 150
+bases: 2561763
+CDS: 2229
+gene: 2270
+rRNA: 1
+tRNA: 40
+
+bin.54
+
+organism: Genus species strain
+contigs: 402
+bases: 1694014
+CDS: 1835
+CRISPR: 1
+gene: 1881
+rRNA: 1
+tRNA: 45
+
+bin.62
+
+organism: Genus species strain
+contigs: 25
+bases: 1788718
+CDS: 1606
+gene: 1652
+rRNA: 1
+tRNA: 44
+tmRNA: 1
