@@ -1,38 +1,59 @@
-#!/bin/bash
+#!/bin/bash -l
 #SBATCH -A uppmax2025-3-3
 #SBATCH -M snowy
 #SBATCH -p core
 #SBATCH -n 2
 #SBATCH -t 02:00:00
-#SBATCH -J htseq_counts
+#SBATCH -J htseq_count
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=lukas.bleichner.5753@student.uu.se
-#SBATCH -o /home/lubl5753/Genome_Analysis/analyses/04_functional_annotation/htseq_out/htseq_%j.out
-#SBATCH -e /home/lubl5753/Genome_Analysis/analyses/04_functional_annotation/htseq_out/htseq_%j.err
+#SBATCH --output=/home/lubl5753/Genome_Analysis/analyses/04_functional_annotation/htseq_out/htseq_%j.out
+#SBATCH --error=/home/lubl5753/Genome_Analysis/analyses/04_functional_annotation/htseq_out/htseq_%j.err
 
+# Load modules
 module load bioinfo-tools
-module load htseq/2.0.2
+module load htseq
 
-BAM_DIR=/home/lubl5753/Genome_Analysis/analyses/04_functional_annotation/rna_mapping
-PROKKA_DIR=/home/lubl5753/Genome_Analysis/analyses/03_structural_annotation/prokka_out
-OUT_DIR=/home/lubl5753/Genome_Analysis/analyses/04_functional_annotation/htseq_out
+# Define paths
+GFF_DIR="/home/lubl5753/Genome_Analysis/analyses/03_structural_annotation/prokka_out2/gff_clean"
+BAM_DIR="/home/lubl5753/Genome_Analysis/analyses/04_functional_annotation/rna_mapping"
+OUTPUT_DIR="/home/lubl5753/Genome_Analysis/analyses/04_functional_annotation/htseq_out"
+mkdir -p "$OUTPUT_DIR"
 
-mkdir -p ${OUT_DIR}
+# Run HTSeq-count on each BAM file
+for BAM_FILE in "${BAM_DIR}"/*_rna.bam; do
+    BASENAME=$(basename "$BAM_FILE" _rna.bam)
+    GFF_FILE="${GFF_DIR}/${BASENAME}.cleaned.gff"
 
-BINS=("bin.62" "bin.36" "bin.11" "bin.20" "bin.9" "bin.5" "bin.49" "bin.22" "bin.31" "bin.2" "bin.54" "bin.13" "bin.12" "bin.10")
+    echo "→ Processing ${BASENAME} …"
+    echo "Looking for GFF: ${GFF_FILE}"
 
-for BIN in "${BINS[@]}"; do
-    GFF_FILE=${PROKKA_DIR}/${BIN}/${BIN}.gff
-    BAM_FILE=${BAM_DIR}/${BIN}_rna.bam
-    OUT_FILE=${OUT_DIR}/${BIN}_counts.txt
-
-    if [[ -f "$GFF_FILE" && -f "$BAM_FILE" ]]; then
-        # Run HTSeq-count for CDS only
-        htseq-count -f bam -r pos -i ID "$BAM_FILE" <(grep -v '^#' "$GFF_FILE" | awk '$3 == "CDS"') > "$OUT_FILE"
-    else
-        echo "Skipping $BIN: missing GFF or BAM"
+    if [[ ! -f "$GFF_FILE" ]]; then
+        echo "⚠️  GFF file not found: $GFF_FILE. Skipping $BASENAME."
+        continue
     fi
+
+    htseq-count \
+        -f bam \
+        -r pos \
+        -s no \
+        -t CDS \
+        -i ID \
+        "$BAM_FILE" \
+        "$GFF_FILE" \
+      > "${OUTPUT_DIR}/${BASENAME}_counts.txt"
+
+    echo "✔️  Counts written to ${OUTPUT_DIR}/${BASENAME}_counts.txt"
 done
 
-echo "HTSeq-count processing for CDS only completed."
+# -----------------------------------------------------
+# Summary of total read counts per sample
+# -----------------------------------------------------
+echo ""
+echo "===== Summary of Read Counts Per Sample ====="
+cd "$OUTPUT_DIR"
+for f in *_counts.txt; do
+    TOTAL=$(grep -v '^__' "$f" | awk '{sum += $2} END {print sum}')
+    echo "$(basename "$f"): $TOTAL reads counted (excluding special entries)"
+done
 

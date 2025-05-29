@@ -24,8 +24,27 @@ OUTDIR="/home/lubl5753/Genome_Analysis/analyses/04_functional_annotation/rna_map
 # Create output directory if it doesn't exist
 mkdir -p "$OUTDIR"
 
-# Loop through each bin and map RNA reads
-for BIN in ${BIN_DIR}/bin.*.fa; do
+# List of selected bins (numerically sorted)
+SELECTED_BINS=(
+    "bin.2.fa"
+    "bin.5.fa"
+    "bin.9.fa"
+    "bin.10.fa"
+    "bin.11.fa"
+    "bin.12.fa"
+    "bin.13.fa"
+    "bin.20.fa"
+    "bin.22.fa"
+    "bin.31.fa"
+    "bin.36.fa"
+    "bin.49.fa"
+    "bin.54.fa"
+    "bin.62.fa"
+)
+
+# Loop through each selected bin and map RNA reads
+for BIN_FILENAME in "${SELECTED_BINS[@]}"; do
+    BIN="${BIN_DIR}/${BIN_FILENAME}"
     BIN_NAME=$(basename "$BIN" .fa)
     echo "Processing $BIN_NAME..."
 
@@ -34,11 +53,9 @@ for BIN in ${BIN_DIR}/bin.*.fa; do
 
     # Align reads and sort output BAM
     bwa mem -t 4 "$BIN" "$READ1" "$READ2" | \
-        samtools view -bS - | \
+        samtools view -b -u - | \
         samtools sort -@ 4 -o "${OUTDIR}/${BIN_NAME}_rna.bam" -
 
-    # Index the BAM file
-    samtools index "${OUTDIR}/${BIN_NAME}_rna.bam"
 done
 
 echo "RNA mapping complete!"
