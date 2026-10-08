@@ -61,6 +61,7 @@ See the separately maintained project GitHub wiki for the detailed guide to conn
 
 ## Known Reproducibility Issues
 
+### The scripts were mainly used for my own research and therefore would have to be fixed for proper reproducibility:
 - Paths vary among scripts and refer to multiple project/storage locations. They need to be reconciled with the actual UPPMAX data layout.
 - The Prokka script writes to `prokka_out2` and creates cleaned GFFs inside each bin's output directory. The HTSeq script expects cleaned GFFs in a separate `prokka_out2/gff_clean` directory. Confirm or correct this handoff before running HTSeq.
 - The EggNOG script reads proteins from `prokka_out`, whereas the available Prokka script writes to `prokka_out2`. Confirm the intended annotation directory and that the expected protein files exist.
