@@ -41,8 +41,10 @@ The scripts process paired-end SRA read sets:
 | RNA | `SRR4342137`, `SRR4342139` | RNA trimming and trimmed-read quality control |
 | RNA | `SRR4342137` | Mapping to selected bins and HTSeq counting |
 
+---
+
 > [!NOTE]
-> These scripts were developed for academic research workflows on UPPMAX. Hardcoded absolute pathing or module versions may require adjustment for execution on other HPC environments.
+> These scripts were developed for academic research workflows on UPPMAX. This project is not very friendly for reproducibility and should further be developed for that.
 
 ---
 
